@@ -1,5 +1,5 @@
 import express from "express";
-import { newUserValidation } from "../middlewares/joiValidation";
+import { newUserValidation } from "../middlewares/joiValidation.js";
 
 const router = express.Router();
 
