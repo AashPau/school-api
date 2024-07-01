@@ -21,6 +21,8 @@ if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
+//router
+
 //server is running healthy
 app.use("/", (req, res) => {
   res.json({ message: "Server running healthy" });
