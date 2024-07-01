@@ -18,8 +18,12 @@ app.use(cors());
 //use morgan only for production
 if (process.env.NODE_ENV !== "production") {
   //you cam leave this for the prod as well to tract the user requests
-  app.use(morgan("dev"));
+  app.use(morgan("tiny"));
 }
+
+//routers
+import routers from "./src/routers/routers.js";
+routers.forEach(({ path, middlewares }) => app.use(path, ...middlewares));
 
 //server is running healthy
 app.use("/", (req, res) => {
