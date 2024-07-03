@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { insertSession } from "../models/session/SessionModel.js";
-import { updateUser } from "../models/user/UserModel.js";
+import { updateTeacher } from "../model/teacher/teacherModel.js";
+import { updateStudent } from "../model/student/studentModel.js";
 
 export const signAccessJWT = async (email) => {
   const token = jwt.sign({ email }, process.env.ACCESSJWT_SECRET, {
@@ -21,12 +22,24 @@ export const verifyAccessJWT = async (token) => {
 };
 
 // =====
-export const signRefreshJWT = async (email) => {
+//to update student model
+export const signRefreshJWTStudent = async (email) => {
   const refreshJWT = jwt.sign({ email }, process.env.REFRESHJWT_SECRET, {
     expiresIn: "30d",
   });
 
-  const user = await updateUser({ email }, { refreshJWT });
+  const user = await updateStudent({ email }, { refreshJWT });
+
+  return user._id ? refreshJWT : null;
+};
+
+//to update teacher model
+export const signRefreshJWTTeacher = async (email) => {
+  const refreshJWT = jwt.sign({ email }, process.env.REFRESHJWT_SECRET, {
+    expiresIn: "30d",
+  });
+
+  const user = await updateTeacher({ email }, { refreshJWT });
 
   return user._id ? refreshJWT : null;
 };
